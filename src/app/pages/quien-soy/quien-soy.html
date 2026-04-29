@@ -1,1 +1,21 @@
-<p>quien-soy works!</p>
+<div *ngIf="usuario">
+
+  <h2>Quién Soy</h2>
+
+  <img [src]="usuario.avatar_url" width="150">
+
+  <p><b>Nombre:</b> {{ usuario.name }}</p>
+  <p><b>Usuario:</b> {{ usuario.login }}</p>
+  <p><b>Bio:</b> {{ usuario.bio }}</p>
+
+  <hr>
+
+  <h3>Juego propio: No explotes modo timba</h3>
+
+  <p>
+    Este juego consiste en elegir entre distintas opciones para acumular puntos.
+    Cada decisión puede aumentar el puntaje o hacer que el jugador pierda todo si "explota".
+    El objetivo es arriesgar de forma inteligente para lograr la mayor cantidad de puntos sin perder.
+  </p>
+
+</div>
