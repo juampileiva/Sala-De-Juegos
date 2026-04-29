@@ -1,21 +1,29 @@
-<div *ngIf="usuario">
+<section class="quien-soy">
+  <h1>Quién Soy</h1>
 
-  <h2>Quién Soy</h2>
+  <div class="tarjeta" *ngIf="usuario">
+    <img [src]="usuario.avatar_url" alt="Foto de perfil de GitHub">
 
-  <img [src]="usuario.avatar_url" width="150">
+    <div>
+      <h2>{{ usuario.name || usuario.login }}</h2>
+      <p><strong>Usuario de GitHub:</strong> {{ usuario.login }}</p>
+      <p><strong>Perfil:</strong> {{ usuario.html_url }}</p>
+      <p><strong>Repositorios públicos:</strong> {{ usuario.public_repos }}</p>
+    </div>
+  </div>
 
-  <p><b>Nombre:</b> {{ usuario.name }}</p>
-  <p><b>Usuario:</b> {{ usuario.login }}</p>
-  <p><b>Bio:</b> {{ usuario.bio }}</p>
+  <div class="juego">
+    <h2>Juego propio: No explotes</h2>
 
-  <hr>
+    <p>
+      El juego consiste en avanzar ronda por ronda tomando decisiones de riesgo.
+      En cada turno el jugador puede sumar puntos o perder la partida si explota.
+      La idea es saber cuándo seguir arriesgando y cuándo plantarse.
+    </p>
 
-  <h3>Juego propio: No explotes modo timba</h3>
-
-  <p>
-    Este juego consiste en elegir entre distintas opciones para acumular puntos.
-    Cada decisión puede aumentar el puntaje o hacer que el jugador pierda todo si "explota".
-    El objetivo es arriesgar de forma inteligente para lograr la mayor cantidad de puntos sin perder.
-  </p>
-
-</div>
+    <p>
+      Gana el jugador que logra acumular una buena cantidad de puntos sin explotar.
+      Pierde si elige una opción explosiva antes de retirarse.
+    </p>
+  </div>
+</section>
