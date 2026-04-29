@@ -1,4 +1,6 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/sala-de-juegos/browser",
   "rewrites": [
     {
       "source": "/(.*)",
