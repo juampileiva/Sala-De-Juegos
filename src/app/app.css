@@ -1,19 +1,42 @@
-body {
-  margin: 0;
+.barra {
+  min-height: 72px;
+  padding: 0 6%;
+  background: #0f172a;
+  border-bottom: 1px solid #334155;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.marca {
+  font-size: 22px;
+  font-weight: bold;
+  color: #f59e0b;
 }
 
 nav {
-  padding: 16px;
-  background-color: #1f2937;
+  display: flex;
+  gap: 18px;
 }
 
 nav a {
-  color: white;
-  text-decoration: none;
-  margin-right: 14px;
-  font-weight: 600;
+  color: #e5e7eb;
+  font-weight: bold;
 }
 
 nav a:hover {
-  text-decoration: underline;
+  color: #f59e0b;
+}
+
+@media (max-width: 700px) {
+  .barra {
+    flex-direction: column;
+    padding: 18px;
+    gap: 14px;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }

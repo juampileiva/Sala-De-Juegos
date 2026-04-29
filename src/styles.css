@@ -1,1 +1,102 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #111827;
+  color: #f9fafb;
+}
+
+a {
+  text-decoration: none;
+}
+
+button,
+a {
+  font-family: inherit;
+}
+
+.pagina {
+  width: 90%;
+  max-width: 1050px;
+  margin: 35px auto;
+  padding: 32px;
+  background: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.subtitulo {
+  color: #d1d5db;
+  line-height: 1.6;
+  max-width: 760px;
+}
+
+.acciones {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.boton {
+  padding: 12px 18px;
+  border-radius: 10px;
+  border: 1px solid #f59e0b;
+  background: #f59e0b;
+  color: #111827;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.boton.secundario {
+  background: transparent;
+  color: #f9fafb;
+  border-color: #6b7280;
+}
+
+.boton:hover {
+  opacity: 0.9;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 430px;
+  margin-top: 20px;
+}
+
+.formulario label {
+  font-weight: bold;
+  color: #e5e7eb;
+}
+
+.formulario input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #4b5563;
+  background: #111827;
+  color: #f9fafb;
+}
+
+.formulario input::placeholder {
+  color: #9ca3af;
+}
+
+.tarjeta {
+  background: #111827;
+  border: 1px solid #374151;
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
