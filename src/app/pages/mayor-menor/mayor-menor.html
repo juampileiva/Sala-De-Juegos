@@ -1,0 +1,84 @@
+<section class="pagina-juego">
+  <div class="encabezado-juego">
+    <div>
+      <p class="etiqueta">Sprint 3</p>
+      <h1>Mayor o menor</h1>
+      <p>
+        Observá la carta actual y adiviná si la próxima carta será mayor o menor.
+        Ganás con 10 aciertos. Perdís si te quedás sin vidas.
+      </p>
+    </div>
+
+    <a routerLink="/home" class="volver">Volver al inicio</a>
+  </div>
+
+  <div class="mensaje-login" *ngIf="!cargando && !estaLogueado">
+    <h2>Necesitás iniciar sesión</h2>
+    <p>Solo los usuarios registrados pueden ingresar y jugar.</p>
+    <a routerLink="/login">Ir al login</a>
+  </div>
+
+  <div class="juego-contenedor" *ngIf="!cargando && estaLogueado">
+    <div class="panel-estado">
+      <div>
+        <span>Jugador</span>
+        <strong>{{ nombreUsuario }}</strong>
+      </div>
+
+      <div>
+        <span>Aciertos</span>
+        <strong>{{ aciertos }} / {{ objetivoAciertos }}</strong>
+      </div>
+
+      <div>
+        <span>Vidas</span>
+        <strong>{{ vidas }}</strong>
+      </div>
+
+      <div>
+        <span>Cartas jugadas</span>
+        <strong>{{ cartasJugadas }}</strong>
+      </div>
+    </div>
+
+    <div class="mesa-cartas">
+      <div class="carta anterior" *ngIf="cartaAnterior">
+        <span>{{ cartaAnterior.nombre }}</span>
+        <strong>{{ cartaAnterior.simbolo }}</strong>
+        <small>{{ cartaAnterior.palo }}</small>
+      </div>
+
+      <div class="carta actual" *ngIf="cartaActual">
+        <span>{{ cartaActual.nombre }}</span>
+        <strong>{{ cartaActual.simbolo }}</strong>
+        <small>{{ cartaActual.palo }}</small>
+      </div>
+    </div>
+
+    <p class="mensaje">{{ mensaje }}</p>
+
+    <div class="acciones-juego">
+      <button type="button" [disabled]="finalizo" (click)="elegir('mayor')">
+        Próxima mayor
+      </button>
+
+      <button type="button" [disabled]="finalizo" (click)="elegir('menor')">
+        Próxima menor
+      </button>
+    </div>
+
+    <div class="resultado" *ngIf="finalizo">
+      <h2>{{ resultado === 'ganado' ? 'Victoria' : 'Derrota' }}</h2>
+
+      <ul>
+        <li>Aciertos: <strong>{{ aciertos }}</strong></li>
+        <li>Cartas jugadas: <strong>{{ cartasJugadas }}</strong></li>
+        <li>Vidas restantes: <strong>{{ vidas }}</strong></li>
+      </ul>
+
+      <button type="button" class="boton-reiniciar" (click)="iniciarPartida()">
+        Jugar otra vez
+      </button>
+    </div>
+  </div>
+</section>

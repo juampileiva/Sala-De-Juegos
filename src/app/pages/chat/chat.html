@@ -1,0 +1,62 @@
+<section class="pagina-chat">
+  <div class="encabezado-chat">
+    <div>
+      <p class="etiqueta">Sprint 3</p>
+      <h1>Sala de chat</h1>
+      <p>
+        Chat global para usuarios logueados. Los mensajes se guardan en Supabase
+        y aparecen automáticamente en todos los clientes conectados.
+      </p>
+    </div>
+
+    <a routerLink="/home" class="volver">Volver al inicio</a>
+  </div>
+
+  <div class="mensaje-login" *ngIf="!cargando && !estaLogueado">
+    <h2>Necesitás iniciar sesión</h2>
+    <p>Solo los usuarios registrados pueden usar la sala de chat.</p>
+    <a routerLink="/login">Ir al login</a>
+  </div>
+
+  <div class="chat-contenedor" *ngIf="!cargando && estaLogueado">
+    <div class="chat-info">
+      <span>Conectado como</span>
+      <strong>{{ nombreUsuario }}</strong>
+    </div>
+
+    <div class="mensajes">
+      <div
+        class="mensaje"
+        *ngFor="let item of mensajes"
+        [class.propio]="esMensajePropio(item)"
+      >
+        <div class="mensaje-cabecera">
+          <strong>{{ item.nombre || item.email }}</strong>
+          <span>{{ obtenerHora(item.fecha) }}</span>
+        </div>
+
+        <p>{{ item.mensaje }}</p>
+      </div>
+
+      <div class="sin-mensajes" *ngIf="mensajes.length === 0">
+        Todavía no hay mensajes. Sé el primero en escribir.
+      </div>
+    </div>
+
+    <form class="form-chat" (ngSubmit)="enviarMensaje()">
+      <input
+        type="text"
+        name="mensaje"
+        [(ngModel)]="mensajeNuevo"
+        placeholder="Escribí tu mensaje..."
+        maxlength="250"
+      />
+
+      <button type="submit" [disabled]="enviando">
+        {{ enviando ? 'Enviando...' : 'Enviar' }}
+      </button>
+    </form>
+
+    <p class="aviso" *ngIf="aviso">{{ aviso }}</p>
+  </div>
+</section>
