@@ -1,0 +1,116 @@
+.juego-preguntados {
+  animation: aparecer 0.4s ease;
+}
+
+.encabezado-juego {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.panel-juego {
+  display: grid;
+  gap: 24px;
+}
+
+.estadisticas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.estadisticas div {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.estadisticas span {
+  display: block;
+  opacity: 0.75;
+  margin-bottom: 6px;
+}
+
+.estadisticas strong {
+  font-size: 24px;
+}
+
+.pregunta-card h2 {
+  margin-bottom: 24px;
+}
+
+.opciones {
+  display: grid;
+  gap: 12px;
+}
+
+.opciones button {
+  width: 100%;
+  border: 0;
+  border-radius: 16px;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-weight: 700;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  transition: 0.2s;
+}
+
+.opciones button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.opciones button.correcta {
+  background: #1f8f52;
+}
+
+.opciones button.incorrecta {
+  background: #a83232;
+}
+
+.opciones button:disabled {
+  cursor: not-allowed;
+}
+
+.mensaje {
+  margin-top: 18px;
+  font-weight: 700;
+}
+
+.resumen {
+  margin: 20px 0;
+}
+
+.acciones {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 800px) {
+  .encabezado-juego {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .estadisticas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

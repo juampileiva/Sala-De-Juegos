@@ -1,0 +1,97 @@
+<section class="pagina juego-preguntados">
+  <div class="encabezado-juego">
+    <div>
+      <p class="etiqueta">Sprint 4</p>
+      <h1>Preguntados</h1>
+      <p class="subtitulo">
+        Respondé preguntas de cultura general obtenidas desde una API externa.
+      </p>
+    </div>
+
+    <a class="boton secundario" routerLink="/home">Volver al inicio</a>
+  </div>
+
+  <div class="tarjeta" *ngIf="cargando">
+    <p>Cargando preguntas...</p>
+  </div>
+
+  <div class="tarjeta" *ngIf="!cargando && !estaLogueado">
+    <h2>Necesitás iniciar sesión</h2>
+    <p>Para jugar y guardar tus resultados tenés que ingresar con tu usuario.</p>
+    <a class="boton" routerLink="/login">Iniciar sesión</a>
+  </div>
+
+  <div class="panel-juego" *ngIf="!cargando && estaLogueado && preguntas.length > 0">
+    <div class="estadisticas">
+      <div>
+        <span>Pregunta</span>
+        <strong>{{ indiceActual + 1 }} / {{ preguntas.length }}</strong>
+      </div>
+
+      <div>
+        <span>Aciertos</span>
+        <strong>{{ aciertos }}</strong>
+      </div>
+
+      <div>
+        <span>Errores</span>
+        <strong>{{ errores }}</strong>
+      </div>
+
+      <div>
+        <span>Puntaje</span>
+        <strong>{{ puntaje }}</strong>
+      </div>
+    </div>
+
+    <div class="tarjeta pregunta-card" *ngIf="!finalizo">
+      <h2>{{ obtenerPreguntaActual().pregunta }}</h2>
+
+      <div class="opciones">
+        <button
+          type="button"
+          *ngFor="let opcion of obtenerPreguntaActual().opciones"
+          [class]="obtenerClaseOpcion(opcion)"
+          [disabled]="respuestaSeleccionada"
+          (click)="responder(opcion)"
+        >
+          {{ opcion }}
+        </button>
+      </div>
+
+      <p class="mensaje">{{ mensaje }}</p>
+
+      <button
+        type="button"
+        class="boton"
+        *ngIf="respuestaSeleccionada"
+        (click)="siguientePregunta()"
+      >
+        {{ indiceActual >= preguntas.length - 1 ? 'Finalizar partida' : 'Siguiente pregunta' }}
+      </button>
+    </div>
+
+    <div class="tarjeta resultado-final" *ngIf="finalizo">
+      <h2>Partida finalizada</h2>
+
+      <p class="mensaje">{{ mensaje }}</p>
+
+      <div class="resumen">
+        <p><strong>Resultado:</strong> {{ resultado }}</p>
+        <p><strong>Aciertos:</strong> {{ aciertos }} de {{ preguntas.length }}</p>
+        <p><strong>Puntaje:</strong> {{ puntaje }}</p>
+        <p><strong>Tiempo:</strong> {{ tiempoSegundos }} segundos</p>
+      </div>
+
+      <div class="acciones">
+        <button type="button" class="boton" (click)="reiniciar()">
+          Jugar de nuevo
+        </button>
+
+        <a class="boton secundario" routerLink="/resultados">
+          Ver resultados
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
