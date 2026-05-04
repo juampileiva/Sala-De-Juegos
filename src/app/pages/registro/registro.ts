@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
 
 import { supabase } from '../../services/supabase';
 
@@ -21,52 +20,83 @@ export class Registro {
   mensaje = '';
   cargando = false;
 
-  constructor(private router: Router) {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   async registrar() {
     this.mensaje = '';
 
-    if (!this.email || !this.nombre || !this.apellido || !this.edad || !this.password) {
+    const emailLimpio = this.email.trim().toLowerCase();
+    const nombreLimpio = this.nombre.trim();
+    const apellidoLimpio = this.apellido.trim();
+
+    if (!emailLimpio || !nombreLimpio || !apellidoLimpio || !this.edad || !this.password) {
       this.mensaje = 'Todos los campos son obligatorios.';
       return;
     }
 
+    if (this.password.length < 6) {
+      this.mensaje = 'La contraseña debe tener al menos 6 caracteres.';
+      return;
+    }
+
     this.cargando = true;
+    this.cdr.detectChanges();
 
-    const { data, error } = await supabase.auth.signUp({
-      email: this.email,
-      password: this.password
-    });
+    try {
+      const { data: usuarioExistente } = await supabase
+        .from('usuarios')
+        .select('id')
+        .eq('email', emailLimpio)
+        .maybeSingle();
 
-    if (error) {
-      this.mensaje = 'No se pudo registrar el usuario. Verifique si ya existe.';
+      if (usuarioExistente) {
+        this.mensaje = 'Ya existe un usuario registrado con ese correo.';
+        return;
+      }
+
+      const { data, error } = await supabase.auth.signUp({
+        email: emailLimpio,
+        password: this.password
+      });
+
+      if (error) {
+        this.mensaje = 'Ya existe un usuario registrado con ese correo.';
+        return;
+      }
+
+      const usuarioAuth = data.user;
+
+      if (!usuarioAuth) {
+        this.mensaje = 'No se pudo crear el usuario.';
+        return;
+      }
+
+      if (usuarioAuth.identities && usuarioAuth.identities.length === 0) {
+        this.mensaje = 'Ya existe un usuario registrado con ese correo.';
+        return;
+      }
+
+      const { error: errorInsert } = await supabase.from('usuarios').insert({
+        id: usuarioAuth.id,
+        email: emailLimpio,
+        nombre: nombreLimpio,
+        apellido: apellidoLimpio,
+        edad: this.edad
+      });
+
+      if (errorInsert) {
+        this.mensaje = 'No se pudieron guardar los datos del usuario.';
+        return;
+      }
+
+      window.location.href = '/login';
+
+    } catch (error) {
+      console.log('Error en registro:', error);
+      this.mensaje = 'No se pudo completar el registro.';
+    } finally {
       this.cargando = false;
-      return;
+      this.cdr.detectChanges();
     }
-
-    const userId = data.user?.id;
-
-    if (!userId) {
-      this.mensaje = 'No se pudo obtener el usuario registrado.';
-      this.cargando = false;
-      return;
-    }
-
-    const { error: errorTabla } = await supabase.from('usuarios').insert({
-      id: userId,
-      email: this.email,
-      nombre: this.nombre,
-      apellido: this.apellido,
-      edad: this.edad
-    });
-
-    if (errorTabla) {
-      this.mensaje = 'El usuario se creó, pero no se pudieron guardar sus datos.';
-      this.cargando = false;
-      return;
-    }
-
-    this.cargando = false;
-    this.router.navigate(['/home']);
   }
 }

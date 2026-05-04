@@ -2,7 +2,7 @@
   <h1>Registro</h1>
 
   <p class="subtitulo">
-    Completá los datos para crear un usuario y acceder a la sala de juegos.
+    Creá tu cuenta para acceder a la Sala de Juegos.
   </p>
 
   <form class="formulario">
@@ -12,6 +12,7 @@
       [(ngModel)]="email"
       name="email"
       placeholder="Ingrese su correo"
+      [disabled]="cargando"
     >
 
     <label>Nombre</label>
@@ -20,6 +21,7 @@
       [(ngModel)]="nombre"
       name="nombre"
       placeholder="Ingrese su nombre"
+      [disabled]="cargando"
     >
 
     <label>Apellido</label>
@@ -28,6 +30,7 @@
       [(ngModel)]="apellido"
       name="apellido"
       placeholder="Ingrese su apellido"
+      [disabled]="cargando"
     >
 
     <label>Edad</label>
@@ -36,6 +39,7 @@
       [(ngModel)]="edad"
       name="edad"
       placeholder="Ingrese su edad"
+      [disabled]="cargando"
     >
 
     <label>Contraseña</label>
@@ -44,6 +48,7 @@
       [(ngModel)]="password"
       name="password"
       placeholder="Ingrese su contraseña"
+      [disabled]="cargando"
     >
 
     <button

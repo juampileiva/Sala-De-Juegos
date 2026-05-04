@@ -36,16 +36,19 @@
     {{ mensaje }}
   </p>
 
-  <h2>Accesos rápidos</h2>
-
-  <div class="acciones">
-    <button
-      class="boton secundario"
-      type="button"
-      *ngFor="let usuario of usuariosRapidos"
-      (click)="cargarUsuarioRapido(usuario.email, usuario.password)"
-    >
-      {{ usuario.texto }}
+  <!-- ACCESOS RAPIDOS -->
+  <div class="accesos">
+    <button class="boton secundario" (click)="toggleRapidos()">
+      {{ mostrarRapidos ? 'Ocultar accesos' : 'Accesos rápidos' }}
     </button>
+
+    <div class="dropdown" *ngIf="mostrarRapidos">
+      <button
+        *ngFor="let usuario of usuariosRapidos"
+        (click)="cargarUsuarioRapido(usuario.email, usuario.password)"
+      >
+        {{ usuario.texto }}
+      </button>
+    </div>
   </div>
 </section>

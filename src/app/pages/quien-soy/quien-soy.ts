@@ -8,13 +8,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './quien-soy.css'
 })
 export class QuienSoy implements OnInit {
-  usuario: any;
+  usuario: any = null;
+  cargando = true;
+  mensaje = '';
 
-  ngOnInit() {
-    fetch('https://api.github.com/users/juampileiva')
-      .then((respuesta) => respuesta.json())
-      .then((datos) => {
-        this.usuario = datos;
-      });
+  async ngOnInit() {
+    await this.cargarDatosGithub();
+  }
+
+  async cargarDatosGithub() {
+    try {
+      const respuesta = await fetch('https://api.github.com/users/juampileiva');
+
+      if (!respuesta.ok) {
+        this.mensaje = 'No se pudieron cargar los datos de GitHub.';
+        return;
+      }
+
+      this.usuario = await respuesta.json();
+    } catch (error) {
+      this.mensaje = 'Ocurrió un error al conectar con GitHub.';
+    } finally {
+      this.cargando = false;
+    }
   }
 }

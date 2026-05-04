@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { supabase } from '../../services/supabase';
@@ -11,22 +11,36 @@ import { supabase } from '../../services/supabase';
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
-  emailUsuario = '';
   estaLogueado = false;
+  emailUsuario = '';
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   async ngOnInit() {
-    const { data } = await supabase.auth.getUser();
-
-    if (data.user) {
-      this.estaLogueado = true;
-      this.emailUsuario = data.user.email || '';
-    }
+    await this.obtenerUsuario();
   }
 
-  async cerrarSesion() {
-    await supabase.auth.signOut();
+  async obtenerUsuario() {
+    const { data } = await supabase.auth.getSession();
+    const user = data.session?.user;
 
-    this.estaLogueado = false;
-    this.emailUsuario = '';
+    if (!user) {
+      this.estaLogueado = false;
+      this.emailUsuario = '';
+      this.cdr.detectChanges();
+      return;
+    }
+
+    this.estaLogueado = true;
+
+    const { data: usuarioDB } = await supabase
+      .from('usuarios')
+      .select('nombre')
+      .eq('id', user.id)
+      .maybeSingle();
+
+    this.emailUsuario = usuarioDB?.nombre || user.email || '';
+
+    this.cdr.detectChanges();
   }
 }

@@ -5,7 +5,9 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: #111827;
+  background:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.12), transparent 28%),
+    #111827;
   color: #f9fafb;
 }
 
@@ -14,25 +16,31 @@ a {
 }
 
 button,
-a {
+a,
+input {
   font-family: inherit;
+}
+
+main {
+  min-height: calc(100vh - 74px);
 }
 
 .pagina {
   width: 90%;
-  max-width: 1050px;
-  margin: 35px auto;
-  padding: 32px;
+  max-width: 1100px;
+  margin: 38px auto;
+  padding: 34px;
   background: #1f2937;
   border: 1px solid #374151;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
 }
 
 .subtitulo {
   color: #d1d5db;
   line-height: 1.6;
   max-width: 760px;
+  font-size: 17px;
 }
 
 .acciones {
@@ -50,24 +58,30 @@ a {
   color: #111827;
   font-weight: bold;
   cursor: pointer;
+  display: inline-block;
 }
 
 .boton.secundario {
   background: transparent;
   color: #f9fafb;
-  border-color: #6b7280;
+  border-color: #64748b;
 }
 
 .boton:hover {
-  opacity: 0.9;
+  opacity: 0.92;
+}
+
+.boton:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
 }
 
 .formulario {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  max-width: 430px;
-  margin-top: 20px;
+  max-width: 480px;
+  margin-top: 22px;
 }
 
 .formulario label {
@@ -76,11 +90,16 @@ a {
 }
 
 .formulario input {
-  padding: 12px;
+  padding: 13px;
   border-radius: 10px;
   border: 1px solid #4b5563;
   background: #111827;
   color: #f9fafb;
+  outline: none;
+}
+
+.formulario input:focus {
+  border-color: #f59e0b;
 }
 
 .formulario input::placeholder {
@@ -98,5 +117,41 @@ a {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   gap: 18px;
-  margin-top: 26px;
+  margin-top: 28px;
+}
+
+.mensaje {
+  max-width: 480px;
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(245, 158, 11, 0.13);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  color: #fde68a;
+}
+
+.accesos {
+  margin-top: 24px;
+}
+
+.dropdown {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 260px;
+}
+
+.dropdown button {
+  padding: 11px 12px;
+  border-radius: 8px;
+  border: 1px solid #475569;
+  background: #111827;
+  color: #f9fafb;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown button:hover {
+  border-color: #f59e0b;
 }

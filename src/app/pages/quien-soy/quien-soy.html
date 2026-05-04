@@ -1,19 +1,32 @@
 <section class="pagina">
   <h1>Quién Soy</h1>
 
+  <p class="subtitulo" *ngIf="cargando">
+    Cargando datos desde GitHub...
+  </p>
+
+  <p class="mensaje" *ngIf="mensaje">
+    {{ mensaje }}
+  </p>
+
   <div class="tarjeta perfil" *ngIf="usuario">
-    <img [src]="usuario.avatar_url" alt="Foto de perfil">
+    <img [src]="usuario.avatar_url" alt="Foto de perfil de GitHub">
 
     <div>
       <h2>{{ usuario.name || usuario.login }}</h2>
       <p><strong>Usuario de GitHub:</strong> {{ usuario.login }}</p>
       <p><strong>Repositorios públicos:</strong> {{ usuario.public_repos }}</p>
-      <p><strong>Perfil:</strong> {{ usuario.html_url }}</p>
+      <p>
+        <strong>Perfil:</strong>
+        <a [href]="usuario.html_url" target="_blank">
+          {{ usuario.html_url }}
+        </a>
+      </p>
     </div>
   </div>
 
   <div class="tarjeta juego">
-    <h2>Juego propio: No explotes </h2>
+    <h2>Juego propio: No explotes modo timba</h2>
 
     <p>
       El juego consiste en avanzar por rondas tomando decisiones de riesgo.

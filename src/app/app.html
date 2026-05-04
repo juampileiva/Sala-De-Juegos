@@ -1,14 +1,26 @@
 <header class="barra">
-  <div class="marca">
+  <a class="marca" routerLink="/home">
     Sala de Juegos
-  </div>
+  </a>
 
-  <nav>
+  <nav class="nav">
     <a routerLink="/home">Inicio</a>
-    <a routerLink="/login">Login</a>
-    <a routerLink="/registro">Registro</a>
-    <a routerLink="/quien-soy">Quién Soy</a>
+    <a routerLink="/quien-soy">Quién soy</a>
+
+    <ng-container *ngIf="!estaLogueado">
+      <a routerLink="/login">Iniciar sesión</a>
+      <a routerLink="/registro">Registro</a>
+    </ng-container>
+
+    <ng-container *ngIf="estaLogueado">
+      <span class="usuario-header">{{ emailUsuario }}</span>
+      <button type="button" class="salir" (click)="cerrarSesion()">
+        Cerrar sesión
+      </button>
+    </ng-container>
   </nav>
 </header>
 
-<router-outlet></router-outlet>
+<main>
+  <router-outlet></router-outlet>
+</main>

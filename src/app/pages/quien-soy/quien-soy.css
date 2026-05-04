@@ -13,10 +13,15 @@
   border: 3px solid #f59e0b;
 }
 
-.juego p,
-.perfil p {
+.perfil p,
+.juego p {
   color: #d1d5db;
   line-height: 1.5;
+}
+
+.perfil a {
+  color: #f59e0b;
+  word-break: break-all;
 }
 
 @media (max-width: 650px) {
