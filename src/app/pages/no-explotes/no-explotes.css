@@ -1,0 +1,118 @@
+.no-explotes {
+  animation: aparecer 0.4s ease;
+}
+
+.encabezado-juego {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.panel-juego {
+  display: grid;
+  gap: 24px;
+}
+
+.estadisticas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.estadisticas div {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.estadisticas span {
+  display: block;
+  opacity: 0.75;
+  margin-bottom: 6px;
+}
+
+.estadisticas strong {
+  font-size: 24px;
+}
+
+.mensaje {
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+}
+
+.tablero button {
+  min-height: 82px;
+  border: 0;
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: 900;
+  color: white;
+  background: linear-gradient(135deg, #7c3aed, #312e81);
+  transition: 0.2s;
+}
+
+.tablero button:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.02);
+}
+
+.tablero button.elegida {
+  cursor: not-allowed;
+}
+
+.tablero button.segura {
+  background: #1f8f52;
+}
+
+.tablero button.bomba {
+  background: #9f1239;
+}
+
+.acciones {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.resultado-final {
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 800px) {
+  .encabezado-juego {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .estadisticas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tablero {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

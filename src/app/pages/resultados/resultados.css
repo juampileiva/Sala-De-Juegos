@@ -1,0 +1,73 @@
+.resultados {
+  animation: aparecer 0.4s ease;
+}
+
+.encabezado-juego {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.bloque-tabla {
+  margin-bottom: 32px;
+}
+
+.bloque-tabla h2 {
+  margin-bottom: 14px;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+th,
+td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+  background: rgba(255, 255, 255, 0.12);
+  font-weight: 800;
+}
+
+tr:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sin-datos {
+  opacity: 0.8;
+  padding: 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 800px) {
+  .encabezado-juego {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

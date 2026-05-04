@@ -1,0 +1,108 @@
+<section class="pagina no-explotes">
+  <div class="encabezado-juego">
+    <div>
+      <p class="etiqueta">Juego propio</p>
+      <h1>No explotes</h1>
+      <p class="subtitulo">
+        Elegí casillas, sumá puntos y plantate antes de encontrar una bomba.
+      </p>
+    </div>
+
+    <a class="boton secundario" routerLink="/home">Volver al inicio</a>
+  </div>
+
+  <div class="tarjeta" *ngIf="cargando">
+    <p>Cargando juego...</p>
+  </div>
+
+  <div class="tarjeta" *ngIf="!cargando && !estaLogueado">
+    <h2>Necesitás iniciar sesión</h2>
+    <p>Para jugar y guardar tus resultados tenés que ingresar con tu usuario.</p>
+    <a class="boton" routerLink="/login">Iniciar sesión</a>
+  </div>
+
+  <div class="panel-juego" *ngIf="!cargando && estaLogueado">
+    <div class="estadisticas">
+      <div>
+        <span>Puntaje</span>
+        <strong>{{ puntaje }}</strong>
+      </div>
+
+      <div>
+        <span>Casillas elegidas</span>
+        <strong>{{ casillasElegidas }}</strong>
+      </div>
+
+      <div>
+        <span>Bombas ocultas</span>
+        <strong>{{ bombasCantidad }}</strong>
+      </div>
+
+      <div>
+        <span>Estado</span>
+        <strong>{{ finalizo ? resultado : 'jugando' }}</strong>
+      </div>
+    </div>
+
+    <div class="tarjeta">
+      <p class="mensaje">{{ mensaje }}</p>
+
+      <div class="tablero">
+        <button
+          type="button"
+          *ngFor="let casilla of casillas"
+          [disabled]="finalizo || casilla.elegida"
+          [class.elegida]="casilla.elegida"
+          [class.bomba]="casilla.elegida && casilla.bomba"
+          [class.segura]="casilla.elegida && !casilla.bomba"
+          (click)="elegirCasilla(casilla)"
+        >
+          <ng-container *ngIf="!casilla.elegida && !finalizo">
+            ?
+          </ng-container>
+
+          <ng-container *ngIf="casilla.elegida && casilla.bomba">
+            💣
+          </ng-container>
+
+          <ng-container *ngIf="casilla.elegida && !casilla.bomba">
+            +{{ casilla.puntos }}
+          </ng-container>
+
+          <ng-container *ngIf="finalizo && !casilla.elegida && casilla.bomba">
+            💣
+          </ng-container>
+
+          <ng-container *ngIf="finalizo && !casilla.elegida && !casilla.bomba">
+            {{ casilla.puntos }}
+          </ng-container>
+        </button>
+      </div>
+
+      <div class="acciones" *ngIf="!finalizo">
+        <button type="button" class="boton" (click)="plantarse()">
+          Plantarme y guardar puntos
+        </button>
+      </div>
+
+      <div class="resultado-final" *ngIf="finalizo">
+        <h2>Partida finalizada</h2>
+
+        <p><strong>Resultado:</strong> {{ resultado }}</p>
+        <p><strong>Puntaje final:</strong> {{ puntaje }}</p>
+        <p><strong>Casillas elegidas:</strong> {{ casillasElegidas }}</p>
+        <p><strong>Tiempo:</strong> {{ tiempoSegundos }} segundos</p>
+
+        <div class="acciones">
+          <button type="button" class="boton" (click)="iniciarPartida()">
+            Jugar de nuevo
+          </button>
+
+          <a class="boton secundario" routerLink="/resultados">
+            Ver resultados
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

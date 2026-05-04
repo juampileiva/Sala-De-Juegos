@@ -1,0 +1,157 @@
+<section class="pagina resultados">
+  <div class="encabezado-juego">
+    <div>
+      <p class="etiqueta">Estadísticas</p>
+      <h1>Resultados</h1>
+      <p class="subtitulo">
+        Listados ordenados de mejor desempeño a peor desempeño.
+      </p>
+    </div>
+
+    <a class="boton secundario" routerLink="/home">Volver al inicio</a>
+  </div>
+
+  <div class="tarjeta" *ngIf="cargando">
+    <p>Cargando resultados...</p>
+  </div>
+
+  <div class="tarjeta" *ngIf="mensaje">
+    <p>{{ mensaje }}</p>
+  </div>
+
+  <div class="bloque-tabla" *ngIf="!cargando">
+    <h2>Ahorcado</h2>
+
+    <div class="tabla-contenedor" *ngIf="resultadosAhorcado.length > 0; else sinAhorcado">
+      <table>
+        <thead>
+          <tr>
+            <th>Jugador</th>
+            <th>Resultado</th>
+            <th>Errores</th>
+            <th>Letras</th>
+            <th>Tiempo</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of resultadosAhorcado">
+            <td>{{ obtenerJugador(item) }}</td>
+            <td>{{ item.resultado }}</td>
+            <td>{{ item.errores || 0 }}</td>
+            <td>{{ item.letras_seleccionadas || 0 }}</td>
+            <td>{{ item.tiempo_segundos || 0 }}s</td>
+            <td>{{ formatearFecha(item.fecha) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #sinAhorcado>
+      <p class="sin-datos">Todavía no hay resultados de Ahorcado.</p>
+    </ng-template>
+  </div>
+
+  <div class="bloque-tabla" *ngIf="!cargando">
+    <h2>Mayor o menor</h2>
+
+    <div class="tabla-contenedor" *ngIf="resultadosMayorMenor.length > 0; else sinMayorMenor">
+      <table>
+        <thead>
+          <tr>
+            <th>Jugador</th>
+            <th>Resultado</th>
+            <th>Aciertos</th>
+            <th>Cartas jugadas</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of resultadosMayorMenor">
+            <td>{{ obtenerJugador(item) }}</td>
+            <td>{{ item.resultado }}</td>
+            <td>{{ item.cartas_acertadas || 0 }}</td>
+            <td>{{ item.cartas_jugadas || 0 }}</td>
+            <td>{{ formatearFecha(item.fecha) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #sinMayorMenor>
+      <p class="sin-datos">Todavía no hay resultados de Mayor o menor.</p>
+    </ng-template>
+  </div>
+
+  <div class="bloque-tabla" *ngIf="!cargando">
+    <h2>Preguntados</h2>
+
+    <div class="tabla-contenedor" *ngIf="resultadosPreguntados.length > 0; else sinPreguntados">
+      <table>
+        <thead>
+          <tr>
+            <th>Jugador</th>
+            <th>Resultado</th>
+            <th>Aciertos</th>
+            <th>Puntaje</th>
+            <th>Tiempo</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of resultadosPreguntados">
+            <td>{{ obtenerJugador(item) }}</td>
+            <td>{{ item.resultado }}</td>
+            <td>{{ item.preguntas_acertadas || 0 }} / {{ item.preguntas_totales || 0 }}</td>
+            <td>{{ item.puntaje || 0 }}</td>
+            <td>{{ item.tiempo_segundos || 0 }}s</td>
+            <td>{{ formatearFecha(item.fecha) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #sinPreguntados>
+      <p class="sin-datos">Todavía no hay resultados de Preguntados.</p>
+    </ng-template>
+  </div>
+
+  <div class="bloque-tabla" *ngIf="!cargando">
+    <h2>No explotes</h2>
+
+    <div class="tabla-contenedor" *ngIf="resultadosNoExplotes.length > 0; else sinNoExplotes">
+      <table>
+        <thead>
+          <tr>
+            <th>Jugador</th>
+            <th>Resultado</th>
+            <th>Puntaje</th>
+            <th>Casillas</th>
+            <th>Explotó</th>
+            <th>Tiempo</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of resultadosNoExplotes">
+            <td>{{ obtenerJugador(item) }}</td>
+            <td>{{ item.resultado }}</td>
+            <td>{{ item.puntaje || 0 }}</td>
+            <td>{{ item.casillas_elegidas || 0 }}</td>
+            <td>{{ item.exploto ? 'Sí' : 'No' }}</td>
+            <td>{{ item.tiempo_segundos || 0 }}s</td>
+            <td>{{ formatearFecha(item.fecha) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #sinNoExplotes>
+      <p class="sin-datos">Todavía no hay resultados de No explotes.</p>
+    </ng-template>
+  </div>
+</section>
