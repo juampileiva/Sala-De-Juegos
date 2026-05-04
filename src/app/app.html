@@ -20,9 +20,10 @@
 
     <ng-container *ngIf="estaLogueado">
       <span class="usuario-header">{{ emailUsuario }}</span>
-      <button type="button" class="salir" (click)="cerrarSesion()">
+
+      <a class="salir" routerLink="/logout">
         Cerrar sesión
-      </button>
+      </a>
     </ng-container>
   </nav>
 </header>
