@@ -6,9 +6,22 @@
     y consultar los resultados obtenidos por cada jugador.
   </p>
 
-  <div class="acciones">
+  <div class="tarjeta usuario" *ngIf="estaLogueado">
+    <h3>Usuario conectado</h3>
+    <p>{{ emailUsuario }}</p>
+
+    <button class="boton secundario" type="button" (click)="cerrarSesion()">
+      Cerrar sesión
+    </button>
+  </div>
+
+  <div class="acciones" *ngIf="!estaLogueado">
     <a class="boton" routerLink="/login">Iniciar sesión</a>
     <a class="boton secundario" routerLink="/registro">Registrarse</a>
+    <a class="boton secundario" routerLink="/quien-soy">Ver quién soy</a>
+  </div>
+
+  <div class="acciones" *ngIf="estaLogueado">
     <a class="boton secundario" routerLink="/quien-soy">Ver quién soy</a>
   </div>
 
