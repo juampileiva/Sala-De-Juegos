@@ -18,6 +18,10 @@ export class Home implements OnInit {
 
   async ngOnInit() {
     await this.obtenerUsuario();
+
+    supabase.auth.onAuthStateChange(async () => {
+      await this.obtenerUsuario();
+    });
   }
 
   async obtenerUsuario() {

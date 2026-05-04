@@ -7,6 +7,12 @@
     <a routerLink="/home">Inicio</a>
     <a routerLink="/quien-soy">Quién soy</a>
 
+    <ng-container *ngIf="estaLogueado">
+      <a routerLink="/ahorcado">Ahorcado</a>
+      <a routerLink="/mayor-menor">Mayor o menor</a>
+      <a routerLink="/chat">Chat</a>
+    </ng-container>
+
     <ng-container *ngIf="!estaLogueado">
       <a routerLink="/login">Iniciar sesión</a>
       <a routerLink="/registro">Registro</a>

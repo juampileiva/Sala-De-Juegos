@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 import { supabase } from './services/supabase';
 
@@ -14,10 +14,17 @@ export class App implements OnInit {
   estaLogueado = false;
   emailUsuario = '';
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private router: Router
+  ) {}
 
   async ngOnInit() {
     await this.obtenerUsuario();
+
+    supabase.auth.onAuthStateChange(async () => {
+      await this.obtenerUsuario();
+    });
   }
 
   async obtenerUsuario() {
@@ -51,6 +58,6 @@ export class App implements OnInit {
     this.emailUsuario = '';
     this.cdr.detectChanges();
 
-    window.location.replace('/login');
+    this.router.navigateByUrl('/login');
   }
 }

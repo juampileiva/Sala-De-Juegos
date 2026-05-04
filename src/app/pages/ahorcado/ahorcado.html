@@ -1,0 +1,77 @@
+<section class="pagina-juego">
+  <div class="encabezado-juego">
+    <div>
+      <p class="etiqueta">Sprint 3</p>
+      <h1>Ahorcado</h1>
+      <p>
+        Elegí letras con los botones. Ganás si descubrís la palabra antes de llegar
+        a los 6 errores.
+      </p>
+    </div>
+
+    <a routerLink="/home" class="volver">Volver al inicio</a>
+  </div>
+
+  <div class="mensaje-login" *ngIf="!cargando && !estaLogueado">
+    <h2>Necesitás iniciar sesión</h2>
+    <p>Solo los usuarios registrados pueden ingresar y jugar.</p>
+    <a routerLink="/login">Ir al login</a>
+  </div>
+
+  <div class="juego-contenedor" *ngIf="!cargando && estaLogueado">
+    <div class="panel-estado">
+      <div>
+        <span>Jugador</span>
+        <strong>{{ nombreUsuario }}</strong>
+      </div>
+
+      <div>
+        <span>Errores</span>
+        <strong>{{ errores }} / {{ maxErrores }}</strong>
+      </div>
+
+      <div>
+        <span>Letras elegidas</span>
+        <strong>{{ letrasSeleccionadas.length }}</strong>
+      </div>
+    </div>
+
+    <div class="palabra">
+      {{ obtenerPalabraMostrada() }}
+    </div>
+
+    <div class="intentos">
+      <div class="barra-error">
+        <div class="progreso-error" [style.width.%]="(errores / maxErrores) * 100"></div>
+      </div>
+    </div>
+
+    <div class="letras">
+      <button
+        type="button"
+        *ngFor="let letra of abecedario"
+        [disabled]="finalizo || letraYaSeleccionada(letra)"
+        [class.usada]="letraYaSeleccionada(letra)"
+        (click)="seleccionarLetra(letra)"
+      >
+        {{ letra }}
+      </button>
+    </div>
+
+    <div class="resultado" *ngIf="finalizo">
+      <h2>{{ resultado === 'ganado' ? 'Victoria' : 'Derrota' }}</h2>
+      <p>{{ mensaje }}</p>
+
+      <ul>
+        <li>Palabra: <strong>{{ palabraSecreta }}</strong></li>
+        <li>Tiempo: <strong>{{ tiempoSegundos }} segundos</strong></li>
+        <li>Letras seleccionadas: <strong>{{ letrasSeleccionadas.length }}</strong></li>
+        <li>Errores: <strong>{{ errores }}</strong></li>
+      </ul>
+
+      <button type="button" class="boton-reiniciar" (click)="iniciarPartida()">
+        Jugar otra vez
+      </button>
+    </div>
+  </div>
+</section>

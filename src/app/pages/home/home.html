@@ -18,33 +18,51 @@
         <span>Sesión iniciada</span>
         <strong>{{ emailUsuario }}</strong>
       </div>
-      
     </div>
   </div>
 
-  <div class="grilla juegos">
-    <article class="tarjeta juego-card">
+  <div class="aviso-login" *ngIf="!estaLogueado">
+    <h2>Para jugar tenés que iniciar sesión</h2>
+    <p>
+      La sala de juegos guarda tus estadísticas, puntajes y resultados.
+      Por eso necesitás ingresar con un usuario registrado.
+    </p>
+  </div>
+
+  <div class="grilla juegos" *ngIf="estaLogueado">
+    <a class="tarjeta juego-card" routerLink="/ahorcado">
       <span>A</span>
       <h3>Ahorcado</h3>
       <p>Descubrí la palabra oculta seleccionando letras.</p>
-    </article>
+      <strong>Jugar ahora</strong>
+    </a>
 
-    <article class="tarjeta juego-card">
+    <a class="tarjeta juego-card" routerLink="/mayor-menor">
       <span>M</span>
       <h3>Mayor o menor</h3>
       <p>Adiviná si la próxima carta será mayor o menor.</p>
-    </article>
+      <strong>Jugar ahora</strong>
+    </a>
 
-    <article class="tarjeta juego-card">
+    <article class="tarjeta juego-card bloqueado">
       <span>P</span>
       <h3>Preguntados</h3>
-      <p>Respondé preguntas y sumá puntos por aciertos.</p>
+      <p>Juego correspondiente al Sprint 4.</p>
+      <strong>Próximamente</strong>
     </article>
 
-    <article class="tarjeta juego-card">
+    <article class="tarjeta juego-card bloqueado">
       <span>N</span>
       <h3>No explotes</h3>
-      <p>Arriesgá puntos ronda a ronda sin explotar.</p>
+      <p>Juego propio correspondiente al Sprint 4.</p>
+      <strong>Próximamente</strong>
     </article>
+
+    <a class="tarjeta juego-card chat-card" routerLink="/chat">
+      <span>C</span>
+      <h3>Sala de chat</h3>
+      <p>Hablá con otros jugadores conectados en tiempo real.</p>
+      <strong>Entrar al chat</strong>
+    </a>
   </div>
 </section>
