@@ -4,10 +4,17 @@ import { RouterLink } from '@angular/router';
 
 import { supabase } from '../../services/supabase';
 
-interface PreguntaApi {
-  question: string;
-  correct_answer: string;
-  incorrect_answers: string[];
+interface PaisApi {
+  name: {
+    common: string;
+  };
+  translations?: {
+    spa?: {
+      common: string;
+    };
+  };
+  capital?: string[];
+  region?: string;
 }
 
 interface PreguntaJuego {
@@ -84,33 +91,58 @@ export class Preguntados implements OnInit {
 
   async cargarPreguntas() {
     this.cargando = true;
-    this.mensaje = 'Cargando preguntas desde la API...';
+    this.mensaje = 'Preparando preguntas...';
 
     try {
-      const respuesta = await fetch('https://opentdb.com/api.php?amount=10&type=multiple');
+      const respuesta = await fetch(
+        'https://restcountries.com/v3.1/all?fields=name,translations,capital,region'
+      );
 
       if (!respuesta.ok) {
         this.mensaje = 'No se pudieron cargar las preguntas.';
         return;
       }
 
-      const datos = await respuesta.json();
+      const paises: PaisApi[] = await respuesta.json();
+
+      const paisesConCapital: PaisApi[] = [];
+
+      for (let i = 0; i < paises.length; i++) {
+        if (paises[i].capital && paises[i].capital!.length > 0) {
+          paisesConCapital.push(paises[i]);
+        }
+      }
+
+      const paisesMezclados = this.mezclarPaises(paisesConCapital);
 
       this.preguntas = [];
 
-      for (let i = 0; i < datos.results.length; i++) {
-        const preguntaApi: PreguntaApi = datos.results[i];
+      for (let i = 0; i < paisesMezclados.length && this.preguntas.length < 10; i++) {
+        const paisCorrecto = paisesMezclados[i];
+        const nombrePais = this.obtenerNombrePais(paisCorrecto);
+        const capitalCorrecta = paisCorrecto.capital![0];
 
-        const opciones = [
-          this.limpiarTexto(preguntaApi.correct_answer),
-          this.limpiarTexto(preguntaApi.incorrect_answers[0]),
-          this.limpiarTexto(preguntaApi.incorrect_answers[1]),
-          this.limpiarTexto(preguntaApi.incorrect_answers[2])
-        ];
+        const opciones: string[] = [capitalCorrecta];
+
+        let indiceOpcion = 0;
+
+        while (opciones.length < 4 && indiceOpcion < paisesConCapital.length) {
+          const paisOpcion = paisesConCapital[indiceOpcion];
+
+          if (paisOpcion.capital && paisOpcion.capital.length > 0) {
+            const capitalOpcion = paisOpcion.capital[0];
+
+            if (capitalOpcion !== capitalCorrecta && !opciones.includes(capitalOpcion)) {
+              opciones.push(capitalOpcion);
+            }
+          }
+
+          indiceOpcion++;
+        }
 
         this.preguntas.push({
-          pregunta: this.limpiarTexto(preguntaApi.question),
-          respuestaCorrecta: this.limpiarTexto(preguntaApi.correct_answer),
+          pregunta: '¿Cuál es la capital de ' + nombrePais + '?',
+          respuestaCorrecta: capitalCorrecta,
           opciones: this.mezclarOpciones(opciones)
         });
       }
@@ -125,16 +157,31 @@ export class Preguntados implements OnInit {
       this.mensaje = 'Elegí la respuesta correcta.';
       this.inicioTiempo = Date.now();
     } catch (error) {
-      this.mensaje = 'Ocurrió un error al conectar con la API de preguntas.';
+      this.mensaje = 'Ocurrió un error al cargar las preguntas.';
     } finally {
       this.cargando = false;
     }
   }
 
-  limpiarTexto(texto: string) {
-    const area = document.createElement('textarea');
-    area.innerHTML = texto;
-    return area.value;
+  obtenerNombrePais(pais: PaisApi) {
+    if (pais.translations && pais.translations.spa && pais.translations.spa.common) {
+      return pais.translations.spa.common;
+    }
+
+    return pais.name.common;
+  }
+
+  mezclarPaises(paises: PaisApi[]) {
+    const copia = [...paises];
+
+    for (let i = copia.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const aux = copia[i];
+      copia[i] = copia[j];
+      copia[j] = aux;
+    }
+
+    return copia;
   }
 
   mezclarOpciones(opciones: string[]) {
@@ -154,7 +201,7 @@ export class Preguntados implements OnInit {
     return this.preguntas[this.indiceActual];
   }
 
-  async responder(opcion: string) {
+  responder(opcion: string) {
     if (this.finalizo || this.respuestaSeleccionada) {
       return;
     }

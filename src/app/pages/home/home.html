@@ -5,7 +5,7 @@
     <h1>Bienvenido a la Sala de Juegos</h1>
 
     <p class="subtitulo">
-      Poné a prueba tu mente y divertite con distintos juegos interactivos.
+      Ingresá a los juegos, revisá tus resultados o utilizá la sala de chat.
     </p>
 
     <div class="acciones" *ngIf="!estaLogueado">
@@ -47,29 +47,29 @@
     <a class="tarjeta juego-card" routerLink="/preguntados">
       <span>P</span>
       <h3>Preguntados</h3>
-      <p>Respondé preguntas de cultura general traídas desde una API.</p>
+      <p>Respondé preguntas de capitales y sumá puntos por cada acierto.</p>
       <strong>Jugar ahora</strong>
     </a>
 
     <a class="tarjeta juego-card" routerLink="/no-explotes">
       <span>N</span>
       <h3>No explotes</h3>
-      <p>Sumá puntos eligiendo casillas, pero cuidado con las bombas.</p>
+      <p>Elegí casillas, sumá puntos y evitá las bombas ocultas.</p>
       <strong>Jugar ahora</strong>
     </a>
 
     <a class="tarjeta juego-card" routerLink="/resultados">
       <span>R</span>
       <h3>Resultados</h3>
-      <p>Consultá las estadísticas y puntajes de todos los juegos.</p>
-      <strong>Ver listados</strong>
+      <p>Consultá los puntajes y estadísticas de cada juego.</p>
+      <strong>Ver resultados</strong>
     </a>
 
-    <a class="tarjeta juego-card chat-card" routerLink="/chat">
+    <a class="tarjeta juego-card" routerLink="/chat">
       <span>C</span>
-      <h3>Sala de chat</h3>
-      <p>Hablá con otros jugadores conectados en tiempo real.</p>
-      <strong>Entrar al chat</strong>
+      <h3>Chat</h3>
+      <p>Sala general para enviar y recibir mensajes entre usuarios.</p>
+      <strong>Entrar</strong>
     </a>
   </div>
 </section>
