@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 
-import { supabase } from '../../services/supabase';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-logout',
@@ -10,20 +10,24 @@ import { supabase } from '../../services/supabase';
   styleUrl: './logout.css'
 })
 export class Logout implements OnInit {
+  constructor(private authService: AuthService) {}
+
   ngOnInit() {
     this.cerrarSesion();
   }
 
   cerrarSesion() {
     try {
-      supabase.auth.signOut();
+      this.authService.cerrarSesion();
     } catch (error) {
       console.log('Error al cerrar sesión:', error);
     }
 
     this.limpiarStorage();
 
-    window.location.replace('/login');
+    setTimeout(() => {
+      window.location.replace('/login');
+    }, 300);
   }
 
   limpiarStorage() {

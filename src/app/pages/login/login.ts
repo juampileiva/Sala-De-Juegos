@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { supabase } from '../../services/supabase';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +24,8 @@ export class Login {
     { texto: 'Jugador 3', email: 'jugador3@test.com', password: '123456' }
   ];
 
+  constructor(private authService: AuthService) {}
+
   async ingresar() {
     this.mensaje = '';
 
@@ -36,10 +38,10 @@ export class Login {
 
     this.cargando = true;
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email: emailLimpio,
-      password: this.password
-    });
+    const { error } = await this.authService.iniciarSesion(
+      emailLimpio,
+      this.password
+    );
 
     this.cargando = false;
 

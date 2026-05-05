@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { supabase } from '../../services/supabase';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-registro',
@@ -20,7 +21,10 @@ export class Registro {
   mensaje = '';
   cargando = false;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
+  ) {}
 
   async registrar() {
     this.mensaje = '';
@@ -54,10 +58,10 @@ export class Registro {
         return;
       }
 
-      const { data, error } = await supabase.auth.signUp({
-        email: emailLimpio,
-        password: this.password
-      });
+      const { data, error } = await this.authService.registrar(
+        emailLimpio,
+        this.password
+      );
 
       if (error) {
         this.mensaje = 'Ya existe un usuario registrado con ese correo.';

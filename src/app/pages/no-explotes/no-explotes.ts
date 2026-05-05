@@ -3,6 +3,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { supabase } from '../../services/supabase';
+import { AuthService } from '../../services/auth.service';
 
 interface Casilla {
   id: number;
@@ -40,7 +41,10 @@ export class NoExplotes implements OnInit {
   resultado = '';
   mensaje = '';
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService
+  ) {}
 
   async ngOnInit() {
     await this.obtenerUsuario();
@@ -54,7 +58,7 @@ export class NoExplotes implements OnInit {
   }
 
   async obtenerUsuario() {
-    const { data } = await supabase.auth.getSession();
+    const { data } = await this.authService.obtenerSesion();
     const user = data.session?.user;
 
     if (!user) {
