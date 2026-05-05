@@ -13,6 +13,7 @@ import { supabase } from './services/supabase';
 export class App implements OnInit {
   estaLogueado = false;
   emailUsuario = '';
+  menuAbierto = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
@@ -31,6 +32,7 @@ export class App implements OnInit {
     if (!user) {
       this.estaLogueado = false;
       this.emailUsuario = '';
+      this.menuAbierto = false;
       this.cdr.detectChanges();
       return;
     }
@@ -46,5 +48,13 @@ export class App implements OnInit {
     this.emailUsuario = usuarioDB?.nombre || user.email || '';
 
     this.cdr.detectChanges();
+  }
+
+  abrirCerrarMenu() {
+    this.menuAbierto = !this.menuAbierto;
+  }
+
+  cerrarMenu() {
+    this.menuAbierto = false;
   }
 }

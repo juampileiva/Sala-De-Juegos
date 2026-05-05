@@ -1,72 +1,202 @@
 .barra {
-  min-height: 74px;
-  padding: 0 6%;
-  background: #0f172a;
-  border-bottom: 1px solid #334155;
+  height: 68px;
+  padding: 0 38px;
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.11);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .marca {
   color: #f59e0b;
-  font-size: 23px;
-  font-weight: bold;
+  font-size: 27px;
+  font-weight: 900;
   text-decoration: none;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
 }
 
 .nav {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 20px;
 }
 
-.nav a {
+.nav > a {
   color: #e5e7eb;
-  font-weight: 600;
   text-decoration: none;
+  font-weight: 800;
+  font-size: 15px;
+  transition: 0.2s;
 }
 
-.nav a:hover {
+.nav > a:hover {
   color: #f59e0b;
 }
 
-.usuario-header {
-  color: #cbd5e1;
+.menu-wrapper {
+  position: relative;
+}
+
+.boton-menu {
+  height: 42px;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.1);
+  color: #f8fafc;
+  padding: 0 16px;
+  border-radius: 14px;
+  font-weight: 900;
   font-size: 14px;
-  border-left: 1px solid #475569;
-  padding-left: 16px;
-}
-
-.salir {
-  background: transparent;
-  color: #f59e0b;
-  border: 1px solid #f59e0b;
-  border-radius: 8px;
-  padding: 9px 12px;
   cursor: pointer;
-  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: 0.2s;
 }
 
-.salir:hover {
+.boton-menu:hover,
+.boton-menu.activo {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(245, 158, 11, 0.7);
+  transform: translateY(-1px);
+}
+
+.lineas {
+  width: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lineas span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  border-radius: 99px;
   background: #f59e0b;
-  color: #111827;
 }
 
-@media (max-width: 760px) {
+.menu-flotante {
+  position: absolute;
+  top: 54px;
+  right: 0;
+  width: 270px;
+  padding: 12px;
+  border-radius: 20px;
+  background: rgba(15, 23, 42, 0.98);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.5);
+  animation: abrirMenu 0.18s ease;
+  z-index: 200;
+}
+
+.menu-flotante::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 28px;
+  width: 14px;
+  height: 14px;
+  background: rgba(15, 23, 42, 0.98);
+  border-left: 1px solid rgba(148, 163, 184, 0.28);
+  border-top: 1px solid rgba(148, 163, 184, 0.28);
+  transform: rotate(45deg);
+}
+
+.menu-flotante a {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 13px;
+  color: #e5e7eb;
+  text-decoration: none;
+  font-weight: 800;
+  transition: 0.18s;
+}
+
+.menu-flotante a:hover {
+  background: rgba(245, 158, 11, 0.13);
+  color: #f59e0b;
+}
+
+.usuario-menu {
+  padding: 12px 14px;
+  margin-bottom: 6px;
+  border-radius: 14px;
+  background: rgba(30, 41, 59, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.usuario-menu small {
+  display: block;
+  color: #94a3b8;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+
+.usuario-menu strong {
+  display: block;
+  color: #f59e0b;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.separador {
+  height: 1px;
+  margin: 8px 6px;
+  background: rgba(148, 163, 184, 0.24);
+}
+
+.menu-flotante .salir {
+  color: #fecaca;
+}
+
+.menu-flotante .salir:hover {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.13);
+}
+
+main {
+  min-height: calc(100vh - 68px);
+}
+
+@keyframes abrirMenu {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 700px) {
   .barra {
-    flex-direction: column;
-    gap: 14px;
-    padding: 18px;
+    height: 64px;
+    padding: 0 18px;
+  }
+
+  .marca {
+    font-size: 22px;
   }
 
   .nav {
-    justify-content: center;
-    flex-wrap: wrap;
+    gap: 10px;
   }
 
-  .usuario-header {
-    border-left: none;
-    padding-left: 0;
+  .nav > a {
+    display: none;
+  }
+
+  .menu-flotante {
+    right: 0;
+    width: 245px;
   }
 }

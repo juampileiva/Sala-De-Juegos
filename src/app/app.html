@@ -1,33 +1,54 @@
 <header class="barra">
-  <a class="marca" routerLink="/home">
+  <a class="marca" routerLink="/home" (click)="cerrarMenu()">
     Sala de Juegos
   </a>
 
   <nav class="nav">
-    <a routerLink="/home">Inicio</a>
-    <a routerLink="/quien-soy">Quién soy</a>
+    <a routerLink="/home" (click)="cerrarMenu()">Inicio</a>
+    <a routerLink="/quien-soy" (click)="cerrarMenu()">Quién soy</a>
 
-    <ng-container *ngIf="estaLogueado">
-      <a routerLink="/ahorcado">Ahorcado</a>
-      <a routerLink="/mayor-menor">Mayor o menor</a>
-      <a routerLink="/preguntados">Preguntados</a>
-      <a routerLink="/no-explotes">No explotes</a>
-      <a routerLink="/resultados">Resultados</a>
-      <a routerLink="/chat">Chat</a>
-    </ng-container>
+    <div class="menu-wrapper">
+      <button
+        type="button"
+        class="boton-menu"
+        [class.activo]="menuAbierto"
+        (click)="abrirCerrarMenu()"
+      >
+        <span class="lineas">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+        <span>Menú</span>
+      </button>
 
-    <ng-container *ngIf="!estaLogueado">
-      <a routerLink="/login">Iniciar sesión</a>
-      <a routerLink="/registro">Registro</a>
-    </ng-container>
+      <div class="menu-flotante" *ngIf="menuAbierto">
+        <ng-container *ngIf="estaLogueado">
+          <div class="usuario-menu">
+            <small>Sesión iniciada</small>
+            <strong>{{ emailUsuario }}</strong>
+          </div>
 
-    <ng-container *ngIf="estaLogueado">
-      <span class="usuario-header">{{ emailUsuario }}</span>
+          <a routerLink="/ahorcado" (click)="cerrarMenu()">Ahorcado</a>
+          <a routerLink="/mayor-menor" (click)="cerrarMenu()">Mayor o menor</a>
+          <a routerLink="/preguntados" (click)="cerrarMenu()">Preguntados</a>
+          <a routerLink="/no-explotes" (click)="cerrarMenu()">No explotes</a>
+          <a routerLink="/resultados" (click)="cerrarMenu()">Resultados</a>
+          <a routerLink="/chat" (click)="cerrarMenu()">Chat</a>
 
-      <a class="salir" routerLink="/logout">
-        Cerrar sesión
-      </a>
-    </ng-container>
+          <div class="separador"></div>
+
+          <a class="salir" routerLink="/logout" (click)="cerrarMenu()">
+            Cerrar sesión
+          </a>
+        </ng-container>
+
+        <ng-container *ngIf="!estaLogueado">
+          <a routerLink="/login" (click)="cerrarMenu()">Iniciar sesión</a>
+          <a routerLink="/registro" (click)="cerrarMenu()">Registro</a>
+        </ng-container>
+      </div>
+    </div>
   </nav>
 </header>
 
